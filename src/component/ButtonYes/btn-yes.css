@@ -1,0 +1,22 @@
+/** SHADES of #63B6FF from less dark to most dark
+* #63B6FF
+* #579FDF
+* #4A89BF
+* #3E729F
+* #325B80
+* #254460
+* #192D40
+* #0C1720
+*/
+
+.btn-primary {
+    background-color: #63B6FF;
+    border-color: #63B6FF;
+    border-radius: 0.75rem;
+    color: #FFFFFF;
+}
+
+.btn-primary:hover{
+    background-color: #4A89BF;
+    border-color: #4A89BF;
+}

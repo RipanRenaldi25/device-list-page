@@ -1,0 +1,22 @@
+/** SHADES of #FF5454 from less dark to most dark
+* #FF5454
+* #DF4A4A
+* #BF3F3F
+* #9F3535
+* #802A2A
+* #602020
+* #401515
+* #401515
+*/
+
+.btn-danger{
+    background-color: #FF5454;
+    border-color: #FF5454;
+    border-radius: 0.75rem;
+    color: #FFFFFF;
+}
+
+.btn-danger:hover{
+    background-color: #9F3535;
+    border-color: #9F3535;
+}
