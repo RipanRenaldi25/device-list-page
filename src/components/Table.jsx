@@ -1,10 +1,12 @@
 import React, {useMemo} from 'react'
 import { useTable, usePagination, useRowSelect } from 'react-table'
-import { useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
+import { useSearchParams } from 'react-router-dom'
 import CheckBox from './CheckBox'
+import { openModal } from '../redux'
 
-function Table() {
+function Table({tipe, onTipeChange}) {
+    const [searchParams, setSearchParams] = useSearchParams();
     const column = [
         {
             Header: 'Device Name',
@@ -36,6 +38,7 @@ function Table() {
 
         }
     ]
+    const dispatch = useDispatch();
     const dummyData = useSelector(state => state.data);
     const data = useMemo(() => dummyData, []);
     const columns = useMemo(() => column, []);
@@ -71,6 +74,12 @@ function Table() {
     } = tableInstances
     const {pageIndex, pageSize} = state;
     const lastPage = pageOptions.slice(-1)[0];
+    
+    function onDetailHandler (id) {
+        dispatch(openModal());
+        onTipeChange('detail');
+        setSearchParams({id});
+    }
     return (
         <div className='p-4 text-center'>
             <table {...getTableProps()} className="w-full text-center">
@@ -99,7 +108,7 @@ function Table() {
                                     } else if(cell.column.Header === 'Detail') {
                                         return (
                                         <td {...cell.getCellProps()} className='text-blue-600 border'>
-                                            <Link to={`/detail/${cell.row.original.id}`}>{cell.render('Cell')}</Link>
+                                            <button onClick={() => onDetailHandler(cell.row.original.id)}>{cell.render('Cell')}</button>
                                         </td>)  
                                     }else {
                                         return <td {...cell.getCellProps()} className="p-2 border">{cell.render('Cell')}</td>
