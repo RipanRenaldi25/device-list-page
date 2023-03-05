@@ -13,6 +13,7 @@ function ModalBody({tipe, onTipeChange}) {
     const [searchParams, setSearchParams] = useSearchParams();
     const [port, setPort] = useState("");
     const [alias, setAlias] = useState("");
+    const [deviceName, setDeviceName] = useState('');
     
     const dispatch = useDispatch();
     function closeAll () {
@@ -25,10 +26,14 @@ function ModalBody({tipe, onTipeChange}) {
     }
     useEffect(() => {
         let id = parseInt(searchParams.get('id'));
-        const dataFiltered = dataState.filter(row => row.id === id);
-        setFilteredRow(dataFiltered[0]);
-        setPort(dataFiltered[0].port);
-        setAlias(dataFiltered[0].alias);
+        if(id){
+            const dataFiltered = dataState.filter(row => row.id === id);
+            setFilteredRow(dataFiltered[0]);
+            setPort(dataFiltered[0].port);
+            setAlias(dataFiltered[0].alias);
+            setDeviceName(dataFiltered[0].device_name);
+
+        }
     }, [searchParams.get('id')])
   return (
     <div className={modalState ? "modal-container flex flex-col w-[500px] justify-center mx-auto border rounded-lg shadow-lg overflow-hidden absolute transition-transform scale-100 z-10 left-1/2 -translate-x-1/2" : "scale-0 absolute"}>
@@ -120,7 +125,7 @@ function ModalBody({tipe, onTipeChange}) {
                 <div className="flex items-center mb-4 text-sm">
                     <span className="basis-44">Select Device</span>
                     <span>:</span>
-                    <select className="w-[220px] ml-[18px] border-2 p-1.5 rounded-md border=[#D4D4D4] placeholder:text-slate-700" value={filteredRow['device_name']} disabled>
+                    <select className="w-[220px] ml-[18px] border-2 p-1.5 rounded-md border=[#D4D4D4] placeholder:text-slate-700" value={deviceName} disabled>
                         <option>Select Device</option>
                         <option value="vtu">VTU</option>
                         <option value="radio">Radio</option>
