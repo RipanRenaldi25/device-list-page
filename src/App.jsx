@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import './index.css';
-import ButtonYes from './component/ButtonYes/ButtonYes';
-import ButtonNo from './component/ButtonNo/ButtonNo';
-import DeleteConfirmation from './component/ModalDeleteConfirmation/DeleteConfirmation';
-import ModalSuccess from './component/ModalSuccess/ModalSuccess';
+import ButtonYes from './components/ButtonYes/ButtonYes';
+import ButtonNo from './components/ButtonNo/ButtonNo';
+import DeleteConfirmation from './components/ModalDeleteConfirmation/DeleteConfirmation';
+import ModalSuccess from './components/ModalSuccess/ModalSuccess';
 
 function App() {
 
