@@ -1,0 +1,12 @@
+.active {
+    @apply bg-[#C2C5C8] w-[190px] h-[30px] rounded-tr-[10px] rounded-br-[10px] absolute -z-10;
+  }
+
+.miniactive {
+    @apply bg-[#C2C5C8] w-[40px] h-[30px] rounded-tr-[10px] rounded-br-[10px] absolute -z-10;
+  }
+
+.activeDashboardPage {
+    @apply bg-[#C2C5C8] w-[190px] h-[30px] rounded-tr-[10px] rounded-br-[10px] absolute -z-10;
+  }
+  
