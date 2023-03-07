@@ -1,52 +1,20 @@
-import { useState } from 'react';
+import DeviceListPage from './pages/DeviceListPage';
+import {Routes, Route} from 'react-router-dom';
+import {Provider} from 'react-redux';
+import store from './redux/store';
+
 import './index.css';
-import ButtonYes from './components/ButtonYes/ButtonYes';
-import ButtonNo from './components/ButtonNo/ButtonNo';
-import DeleteConfirmation from './components/ModalDeleteConfirmation/DeleteConfirmation';
-import ModalSuccess from './components/ModalSuccess/ModalSuccess';
-
 function App() {
-
-  /** How to Use Modal */
-  const [modalShow, setModalShow] = useState();
-  const [modalDel, setModalDel] = useState();
-
   return (
-    // <div className="App">
-    //   <header className="App-header">
-    //     <img src={logo} className="App-logo" alt="logo" />
-    //     <p>
-    //       Edit <code>src/App.js</code> and save to reload.
-    //     </p>
-    //     <a
-    //       className="App-link"
-    //       href="https://reactjs.org"
-    //       target="_blank"
-    //       rel="noopener noreferrer"
-    //     >
-    //       Learn React
-    //     </a>
-    //   </header>
-    // </div>
-    <>
-      <br></br>
-      <ButtonYes btnName="Open Modal Oke" onClick={() => setModalShow(true)}/>
-      <br></br>
-      <br></br>
-      <ButtonNo btnName="Open Delete" onClick={() => setModalDel(true)}/>
-
-      <DeleteConfirmation
-        show={modalDel}
-        message={'You will not able to recover this device!'}
-        onHide={() => setModalDel(false)}
-      />
-      <ModalSuccess
-        show={modalShow}
-        message={'Create Device Successfully.'}
-        onHide={() => setModalShow(false)}
-      />
-    </>
-
+    <div className="App">
+      <Provider store={store}>
+        <main>  
+          <Routes>
+            <Route path="/" element={<DeviceListPage />}/>
+          </Routes>
+        </main>
+      </Provider>
+    </div>
   );
 }
 
