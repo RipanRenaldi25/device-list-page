@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useSearchParams } from "react-router-dom";
 import { changeSelect, closeModal, closeSelect } from "../redux";
+import FormRadio from "./FormRadio";
+import FormVTU from "./FormVTU";
 
 function ModalBody({ tipe, onTipeChange }) {
   const [isEdit, setIsEdit] = useState(false);
@@ -13,11 +15,18 @@ function ModalBody({ tipe, onTipeChange }) {
   const [port, setPort] = useState("");
   const [alias, setAlias] = useState("");
   const [deviceName, setDeviceName] = useState("");
+  const [selectValue, setSelectValue] = useState("");
+  const [isDisabled, setIsDisabled] = useState(false);
+  function test(e) {
+    setSelectValue(e.target.value);
+    setIsDisabled(true);
+  }
 
   const dispatch = useDispatch();
   function closeAll() {
     dispatch(closeModal());
     dispatch(closeSelect());
+    setIsDisabled(false);
   }
   function onEditHandlerModal() {
     dispatch(changeSelect());
@@ -46,7 +55,7 @@ function ModalBody({ tipe, onTipeChange }) {
           <div className="flex items-center mb-4 text-sm font-sans">
             <span className="basis-44">Select Device</span>
             <span>:</span>
-            <select className="w-[220px] ml-[18px] border-2 p-1.5 rounded-md border=[#D4D4D4] placeholder:text-slate-700">
+            <select className="w-[220px] ml-[18px] border-2 p-1.5 rounded-md border=[#D4D4D4] placeholder:text-slate-700" onChange={test} disabled={isDisabled}>
               <option>Select Device</option>
               <option value="vtu">VTU</option>
               <option value="radio">Radio</option>
@@ -55,70 +64,16 @@ function ModalBody({ tipe, onTipeChange }) {
               <option value="radio">Preyen</option>
             </select>
           </div>
-          <div hidden={!selectState}>
-            <div className="flex items-center mb-4 text-sm">
-              <span className="basis-44">Select Device</span>
-              <span>:</span>
-              <input className="w-[220px] ml-[18px] border-2 p-1.5 rounded-md border=[#D4D4D4] px-2 py-1" />
+          {selectValue === "vtu" && (
+            <div hidden={!selectState}>
+              <FormVTU />
             </div>
-            <div className="flex items-center mb-4 text-sm">
-              <span className="basis-44">SIP Number</span>
-              <span>:</span>
-              <input className="w-[220px] ml-[18px] border-2 p-1.5 rounded-md border=[#D4D4D4] px-2 py-1" />
+          )}
+          {selectValue === "radio" && (
+            <div hidden={!selectState}>
+              <FormRadio />
             </div>
-            <div className="flex items-center mb-4 text-sm">
-              <span className="basis-44">Device Name</span>
-              <span>:</span>
-              <input className="w-[220px] ml-[18px] border-2 p-1.5 rounded-md border=[#D4D4D4] px-2 py-1" />
-            </div>
-            <div className="flex items-center mb-4 text-sm">
-              <span className="basis-44">New IP Address</span>
-              <span>:</span>
-              <input className="w-[220px] ml-[18px] border-2 p-1.5 rounded-md border=[#D4D4D4] px-2 py-1" />
-            </div>
-            <div className="flex items-center mb-4 text-sm">
-              <span className="basis-44">PORT</span>
-              <span>:</span>
-              <input className="w-[220px] ml-[18px] border-2 p-1.5 rounded-md border=[#D4D4D4] px-2 py-1" />
-            </div>
-            <div className="flex items-center mb-4 text-sm">
-              <span className="basis-44">Device Serial Number</span>
-              <span>:</span>
-              <input className="w-[220px] ml-[18px] border-2 p-1.5 rounded-md border=[#D4D4D4] px-2 py-1" />
-            </div>
-            <div className="flex items-center mb-4 text-sm">
-              <span className="basis-44">ALIAS</span>
-              <span>:</span>
-              <input className="w-[220px] ml-[18px] border-2 p-1.5 rounded-md border=[#D4D4D4] px-2 py-1" />
-            </div>
-            <div className="flex items-center mb-4 text-sm">
-              <span className="basis-44">Device Type</span>
-              <span>:</span>
-              <select className="w-[220px] ml-[18px] border-2 p-1.5 rounded-md border=[#D4D4D4]">
-                <option></option>
-                <option value="ff">Full Function (FF)</option>
-                <option value="radio">Low Function (LF)</option>
-                <option value="radio">S Function (SF)</option>
-              </select>
-            </div>
-            <div className="flex items-center mb-4 text-sm">
-              <span className="basis-44">CODEC Type</span>
-              <span>:</span>
-              <select className="w-[220px] ml-[18px] border-2 p-1.5 rounded-md border=[#D4D4D4]">
-                <option></option>
-                <option value="ff">Full Function (FF)</option>
-                <option value="radio">G.711 - ulaw</option>
-                <option value="radio">G.711 - alaw</option>
-                <option value="radio">G.722</option>
-                <option value="radio">G.723</option>
-                <option value="radio">G.726</option>
-                <option value="radio">GSM</option>
-                <option value="radio">iLBC</option>
-                <option value="radio">LPC10</option>
-                <option value="radio">Speex</option>
-              </select>
-            </div>
-          </div>
+          )}
           <div className="modal-footer flex items-center justify-end mr-5 mb-5 bg-white">
             <div className="bg-[#FF5454] text-white rounded-lg w-[100px] mr-5 text-center">
               <button className="px-7 py-1" onClick={() => closeAll()}>
@@ -138,7 +93,7 @@ function ModalBody({ tipe, onTipeChange }) {
           <div className="flex items-center mb-4 text-sm">
             <span className="basis-44">Select Device</span>
             <span>:</span>
-            <select className="w-[220px] ml-[18px] border-2 p-1.5 rounded-md border=[#D4D4D4] placeholder:text-slate-700" value={deviceName} disabled>
+            <select className="w-[220px] ml-[18px] border-2 p-1.5 rounded-md border=[#D4D4D4] placeholder:text-slate-700" value={deviceName}>
               <option>Select Device</option>
               <option value="vtu">VTU</option>
               <option value="radio">Radio</option>
@@ -148,33 +103,33 @@ function ModalBody({ tipe, onTipeChange }) {
             </select>
           </div>
           <div>
-            <div className="flex items-center mb-4">
+            <div className="flex items-center mb-4 text-sm">
               <span className="basis-44">SIP Number</span>
               <span>:</span>
               <input className="w-[220px] ml-[18px] border-2 p-1.5 rounded-md border=[#D4D4D4] px-2 py-1" disabled />
             </div>
 
-            <div className="flex items-center mb-4">
+            <div className="flex items-center mb-4 text-sm">
               <span className="basis-44">IP Address</span>
               <span>:</span>
               <input className="w-[220px] ml-[18px] border-2 p-1.5 rounded-md border=[#D4D4D4] px-2 py-1" disabled />
             </div>
-            <div className="flex items-center mb-4">
+            <div className="flex items-center mb-4 text-sm">
               <span className="basis-44">PORT</span>
               <span>:</span>
               <input className="w-[220px] ml-[18px] border-2 p-1.5 rounded-md border=[#D4D4D4] px-2 py-1" value={port} disabled={!isEdit} onChange={(e) => setPort(e.target.value)} />
             </div>
-            <div className="flex items-center mb-4">
+            <div className="flex items-center mb-4 text-sm">
               <span className="basis-44">Device Serial Number</span>
               <span>:</span>
               <input className="w-[220px] ml-[18px] border-2 p-1.5 rounded-md border=[#D4D4D4] px-2 py-1" disabled />
             </div>
-            <div className="flex items-center mb-4">
+            <div className="flex items-center mb-4 text-sm">
               <span className="basis-44">Alias</span>
               <span>:</span>
               <input className="w-[220px] ml-[18px] border-2 p-1.5 rounded-md border=[#D4D4D4] px-2 py-1" value={alias} disabled={!isEdit} onChange={(e) => setAlias(e.target.value)} />
             </div>
-            <div className="flex items-center mb-4">
+            <div className="flex items-center mb-4 text-sm">
               <span className="basis-44">Device Type</span>
               <span>:</span>
               <select className="w-[220px] ml-[18px] border-2 p-1.5 rounded-md border=[#D4D4D4]" disabled>
@@ -183,7 +138,7 @@ function ModalBody({ tipe, onTipeChange }) {
                 <option value="radio">Radio</option>
               </select>
             </div>
-            <div className="flex items-center mb-4">
+            <div className="flex items-center mb-4 text-sm">
               <span className="basis-44">CODEC Type</span>
               <span>:</span>
               <select className="w-[220px] ml-[18px] border-2 p-1.5 rounded-md border=[#D4D4D4]" disabled>
@@ -200,17 +155,17 @@ function ModalBody({ tipe, onTipeChange }) {
                 <div className="flex-grow border-t-2  border-black"></div>
                 <span class="flex-shrink mx-4 text-white">......</span>
               </div>
-              <div className="flex items-center mb-4">
+              <div className="flex items-center mb-4 text-sm">
                 <span className="basis-44">Temperature</span>
                 <span>:</span>
                 <input className="w-[220px] ml-[18px] border-2 p-1.5 rounded-md border=[#D4D4D4] px-2 py-1" disabled />
               </div>
-              <div className="flex items-center mb-4">
+              <div className="flex items-center mb-4 text-sm">
                 <span className="basis-44">CPU Usage</span>
                 <span>:</span>
                 <input className="w-[220px] ml-[18px] border-2 p-1.5 rounded-md border=[#D4D4D4] px-2 py-1" disabled />
               </div>
-              <div className="flex items-center mb-4">
+              <div className="flex items-center mb-4 text-sm">
                 <span className="basis-44">Memory Usage</span>
                 <span>:</span>
                 <input className="w-[220px] ml-[18px] border-2 p-1.5 rounded-md border=[#D4D4D4] px-2 py-1" disabled />
