@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 
 const FormVTU = () => {
   return (
-    <div>
+    <form>
       <div className="flex items-center mb-4 text-sm">
         <span className="basis-44">SIP Number</span>
         <span>:</span>
@@ -60,7 +60,7 @@ const FormVTU = () => {
           <option value="radio">Speex</option>
         </select>
       </div>
-    </div>
+    </form>
   );
 };
 

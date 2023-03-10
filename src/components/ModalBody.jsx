@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useSearchParams } from "react-router-dom";
 import { changeSelect, closeModal, closeSelect } from "../redux";
+import FormIpPhone from "./FormIpPhone";
+import FormPabx from "./FormPABX";
+import FormPreyen from "./FormPreyen";
 import FormRadio from "./FormRadio";
 import FormVTU from "./FormVTU";
 
@@ -15,9 +18,9 @@ function ModalBody({ tipe, onTipeChange }) {
   const [port, setPort] = useState("");
   const [alias, setAlias] = useState("");
   const [deviceName, setDeviceName] = useState("");
-  const [selectValue, setSelectValue] = useState("");
+  const [selectValue, setSelectValue] = useState("default");
   const [isDisabled, setIsDisabled] = useState(false);
-  function test(e) {
+  function onChangeSelectHandler(e) {
     setSelectValue(e.target.value);
     setIsDisabled(true);
   }
@@ -27,6 +30,8 @@ function ModalBody({ tipe, onTipeChange }) {
     dispatch(closeModal());
     dispatch(closeSelect());
     setIsDisabled(false);
+    setSelectValue("default");
+    setIsEdit(false);
   }
   function onEditHandlerModal() {
     dispatch(changeSelect());
@@ -55,13 +60,13 @@ function ModalBody({ tipe, onTipeChange }) {
           <div className="flex items-center mb-4 text-sm font-sans">
             <span className="basis-44">Select Device</span>
             <span>:</span>
-            <select className="w-[220px] ml-[18px] border-2 p-1.5 rounded-md border=[#D4D4D4] placeholder:text-slate-700" onChange={test} disabled={isDisabled}>
+            <select className="w-[220px] ml-[18px] border-2 p-1.5 rounded-md border=[#D4D4D4] placeholder:text-slate-700" onChange={onChangeSelectHandler} disabled={isDisabled} value={selectValue}>
               <option>Select Device</option>
               <option value="vtu">VTU</option>
               <option value="radio">Radio</option>
-              <option value="vtu">PABX</option>
-              <option value="radio">IP Phone</option>
-              <option value="radio">Preyen</option>
+              <option value="pabx">PABX</option>
+              <option value="ip_phone">IP Phone</option>
+              <option value="preyen">Preyen</option>
             </select>
           </div>
           {selectValue === "vtu" && (
@@ -74,15 +79,31 @@ function ModalBody({ tipe, onTipeChange }) {
               <FormRadio />
             </div>
           )}
+          {selectValue === "pabx" && (
+            <div hidden={!selectState}>
+              <FormPabx />
+            </div>
+          )}
+          {selectValue === "preyen" && (
+            <div hidden={!selectState}>
+              <FormPreyen />
+            </div>
+          )}
+          {selectValue === "ip_phone" && (
+            <div hidden={!selectState}>
+              <FormIpPhone />
+            </div>
+          )}
+
           <div className="modal-footer flex items-center justify-end mr-5 mb-5 bg-white">
             <div className="bg-[#FF5454] text-white rounded-lg w-[100px] mr-5 text-center">
               <button className="px-7 py-1" onClick={() => closeAll()}>
                 Cancel
               </button>
             </div>
-            <div className="bg-[#63B6FF] text-white rounded-lg w-[100px] text-center">
-              <button className="px-7 py-1" onClick={selectState ? () => closeAll() : () => dispatch(changeSelect())}>
-                {selectState ? "Submit" : "Next"}
+            <div className="bg-[#63B6FF] text-white rounded-lg w-[100px] flex justify-center">
+              <button className="px-7 py-1" onClick={selectState ? () => closeAll() : () => selectValue !== "default" && dispatch(changeSelect())}>
+                {!selectState ? "Next" : "Submit"}
               </button>
             </div>
           </div>
@@ -93,8 +114,8 @@ function ModalBody({ tipe, onTipeChange }) {
           <div className="flex items-center mb-4 text-sm">
             <span className="basis-44">Select Device</span>
             <span>:</span>
-            <select className="w-[220px] ml-[18px] border-2 p-1.5 rounded-md border=[#D4D4D4] placeholder:text-slate-700" value={deviceName}>
-              <option>Select Device</option>
+            <select className="w-[220px] ml-[18px] border-2 p-1.5 rounded-md border=[#D4D4D4] placeholder:text-slate-700" value={deviceName} disabled>
+              <option value="default">Select Device</option>
               <option value="vtu">VTU</option>
               <option value="radio">Radio</option>
               <option value="vtu">VTU</option>
@@ -119,6 +140,7 @@ function ModalBody({ tipe, onTipeChange }) {
               <span>:</span>
               <input className="w-[220px] ml-[18px] border-2 p-1.5 rounded-md border=[#D4D4D4] px-2 py-1" value={port} disabled={!isEdit} onChange={(e) => setPort(e.target.value)} />
             </div>
+            {console.log(isEdit)}
             <div className="flex items-center mb-4 text-sm">
               <span className="basis-44">Device Serial Number</span>
               <span>:</span>
