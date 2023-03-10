@@ -60,7 +60,7 @@ function ModalBody({ tipe, onTipeChange }) {
           <div className="flex items-center mb-4 text-sm font-sans">
             <span className="basis-44">Select Device</span>
             <span>:</span>
-            <select className="w-[220px] ml-[18px] border-2 p-1.5 rounded-md border=[#D4D4D4] placeholder:text-slate-700" onChange={onChangeSelectHandler} disabled={isDisabled} value={selectValue}>
+            <select className="w-[220px] ml-[18px] border-2 p-1.5 rounded-md border=[#D4D4D4] placeholder:text-slate-700" onChange={onChangeSelectHandler} disabled={selectState} value={selectValue}>
               <option>Select Device</option>
               <option value="vtu">VTU</option>
               <option value="radio">Radio</option>
@@ -94,7 +94,6 @@ function ModalBody({ tipe, onTipeChange }) {
               <FormIpPhone />
             </div>
           )}
-
           <div className="modal-footer flex items-center justify-end mr-5 mb-5 bg-white">
             <div className="bg-[#FF5454] text-white rounded-lg w-[100px] mr-5 text-center">
               <button className="px-7 py-1" onClick={() => closeAll()}>
@@ -140,7 +139,6 @@ function ModalBody({ tipe, onTipeChange }) {
               <span>:</span>
               <input className="w-[220px] ml-[18px] border-2 p-1.5 rounded-md border=[#D4D4D4] px-2 py-1" value={port} disabled={!isEdit} onChange={(e) => setPort(e.target.value)} />
             </div>
-            {console.log(isEdit)}
             <div className="flex items-center mb-4 text-sm">
               <span className="basis-44">Device Serial Number</span>
               <span>:</span>
