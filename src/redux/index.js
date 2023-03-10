@@ -4,3 +4,9 @@ export {
   openGroupListModal,
   closeGroupListModal,
 } from "./groupListModal/Action";
+
+export {
+  fetchDeviceFailed,
+  fetchDevices,
+  fetchDeviceSuccess,
+} from "./deviceData/Action";

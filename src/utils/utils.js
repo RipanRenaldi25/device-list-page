@@ -3,7 +3,7 @@ import axios from "axios";
 export const getAllDevices = async () => {
   try {
     const response = await axios.get(
-      `http://${process.env.REACT_APP_BASE_URL}/userdevice`
+      `${process.env.REACT_APP_BASE_URL}/userdevice`
     );
     return response.data;
   } catch (e) {
@@ -14,7 +14,7 @@ export const getAllDevices = async () => {
 export const addNewDevice = async (payload) => {
   try {
     const response = await axios.post(
-      "172.16.27.222:8080/api/userdevice/add",
+      `${process.env.REACT_APP_BASE_URL}/userdevice/add`,
       payload
     );
     return response.data[0];
